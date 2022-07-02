@@ -1,6 +1,6 @@
 # Solids_deadops_first_person_script
 
-#First person for Dead Ops Arcade install
+# First person for Dead Ops Arcade install
 Open %%localappdata%\Plutonium\storage\t5\scripts\sp
 
 next take the `zombietron` folder and add it there along with the script inside
