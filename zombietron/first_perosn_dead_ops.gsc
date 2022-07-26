@@ -3,34 +3,31 @@
 #include maps\_zombietron_utility; 
 init()
 {
-	level thread upon_player_connection(); //set up first person
+	thread onConnect(); //set up first person
 	thread zombiesleft_hud(); // setup counter
 }
 
-upon_player_connection()
+onConnect()
 {
 	for(;;)
 	{
-		level waittill("connecting", player); // looks for connecting players
-		player setclientdvar("player_topDownCamMode", 0 ); //make sure to set it for joining players
-		player thread intermission_monitor(player); // this makes sure when you move on to another area it keeps it first
-		level waittill("round_spawning_starting"); // just in case, when zombies spawn make it first
-		player setclientdvar("player_topDownCamMode", 0 ); //^^
+		level waittill( "connecting", player );
+		player thread fps_tron();
 	}
 }
 
-
-// ima need to use this to keep setting 1st
-intermission_monitor(player)
+fps_tron() //will always be fps no matter what
 {
-	while(1)
+	for(;;)
 	{
-		level.in_intermission = false;
-		level waittill("exit_taken");//this looks for when you exit(might not be needed)
-		level.in_intermission = true;
-		level waittill( "fade_in_complete"); //looks for when you when you go into a new area
-		player setclientdvar("player_topDownCamMode", 0 ); //set to first in new area
+		players = GetPlayers();	
+		for(i = 0; i < players.size; i ++)
+		{
+			players[i] setclientdvar("player_topDownCamMode", 0 );
+		}
+		wait 0.05;
 	}
+	
 }
 
 zombiesleft_hud() // zombies left function
